@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit"/>
+    <title>爱你哦</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/top.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/calendar.css">
+    <style type="text/css">
+        html {
+            font: 500 14px 'roboto';
+            color: #333;
+            background-color: #fafafa;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul, ol, li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #demo {
+            width: 300px;
+            margin: 150px auto;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        #dt {
+            margin: 30px auto;
+            height: 28px;
+            width: 200px;
+            padding: 0 6px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        .left-diary {
+            float: left;
+            margin: 30px;
+            width:55%;
+        }
+
+        .right-diary {
+            float: left;
+            margin:-128px 10px 30px 0px;
+        }
+
+        .icon {
+            float: left;
+            margin: 0px 20px;
+        }
+
+        .title {
+            margin: 0px 0px 8px 0px;
+        }
+
+        .left{
+            float: left;
+            width:24%;
+        }
+        .right {
+            float: right;
+        }
+        .center{
+            text-align:center;
+        }
+        .overflow-hidden{
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+<!--头部-->
+<div class="headerpage"></div>
+<!--导航 -->
+<!--分割导航和顶部-->
+<div class="row top-nav">
+    <div class="col-md-6">
+        <ul class="nav nav-pills">
+            <li>
+                <a href="#"></a>
+            </li>
+            <li class="active"><a href="index.html"><span class="fa fa-home"></span></a></li>
+            <li><a href="index.html">表白主页</a></li>
+            <li><a href="userdata.html">个人主页</a></li>
+            <li><a href="diary.html" class="bg-info">日记主页</a></li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <form action="search.html" class="form-inline pull-right" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search" placeholder="请输入商品名称进行搜索">
+            </div>
+            <button type="submit" class="btn btn-default btn-sm"><span class="fa fa-search"></span></button>
+        </form>
+    </div>
+</div>
+<!--头部结束-->
+<div class="container">
+    <div class="col-md-2">
+        <!--左侧导航开始-->
+        <div class="panel-group" id="accordion">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <!--主选项：资料修改-->
+                    <p class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">个人资料</a>
+                    </p>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <div><a href="userdata.html">基础信息</a></div>
+                        <div><a href="personalDiary.html"><b>个人日记</b></a></div>
+                        <div><a href="upload.html">上传头像</a></div>
+                        <div><a href="password.html">修改密码</a></div>
+                        <div><a href="pay.html">购买VIP</a></div>
+                        <div><a href="exit.html">退出</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--左侧导航结束-->
+    </div>
+    <div class="col-md-10	">
+        <div class="panel panel-default">
+            <ul class="nav nav-tabs">
+                <li><a href="userdata.html">基础信息</a></li>
+                <li class="active"><a href="#">个人日记</a></li>
+                <li><a href="upload.html">上传头像</a></li>
+                <li><a href="password.html">修改密码</a></li>
+                <li><a href="pay.html">购买VIP</a></li>
+                <li><a href="exit.html">退出</a></li>
+            </ul>
+            <div class="panel-body">
+                <!--修改资料表单开始-->
+                <div class="overflow-hidden">
+                    <div class="left-diary" id="diaries">
+                        <div class="center"><a href="WriteDiary.html" class="text-danger bg-primary"><b>我要写日记</b></a></div>
+                    </div>
+                    <div class="right-diary">
+                        <!--右侧导航开始-->
+                        <div id="demo">
+                            <div id="ca"></div>
+                            <input type="text" id="dt" placeholder="trigger calendar">
+                            <div id="dd"></div>
+                        </div>
+                        <!--右侧导航结束-->
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div class="footerpage"></div>
+<!--footer over-->
+</body>
+<script src="../js/calendar.js"></script>
+<script type="text/javascript">
+    $(function () {
+        /*公共部分
+         * 导航栏
+         * footer CopyRight
+         */
+        $(".headerpage").load("header2.html");
+        $(".footerpage").load("footer.html");
+    });
+    $("#ca").calendar({
+        width: 320,
+        height: 320,
+        data: [
+            {
+                date: '2015/12/24',
+                value: 'Christmas Eve'
+            },
+            {
+                date: '2015/12/25',
+                value: 'Merry Christmas'
+            },
+            {
+                date: '2016/01/01',
+                value: 'Happy New Year'
+            }
+        ],
+        onSelected: function (view, date, data) {
+            console.log('view:' + view);
+            alert('date:' + date);
+            console.log('data:' + (data || 'None'));
+        }
+    });
+
+    $("#dd").calendar({
+        trigger: '#dt',
+        zIndex: 999,
+        format: 'yyyy-mm-dd',
+        onSelected: function (view, date, data) {
+            console.log('event: onSelected')
+        },
+        onClose: function (view, date, data) {
+            console.log('event: onClose')
+            console.log('view:' + view)
+            console.log('date:' + date)
+            console.log('data:' + (data || 'None'));
+        }
+    });
+
+    //获取所有diary信息
+    $(document).ready(function () {
+        showDiaryAllInfo();
+    });
+    var pageNum=0;
+    var pageSize=5;
+    function showDiaryAllInfo() {
+        $.ajax({
+            "url": "/love/diaries/personInfo?pageNum="+pageNum+"&pageSize="+pageSize,
+            "type": "get",
+            "dataType": "json",
+            "success": function (json) {
+                if (json.state == 200) {
+                    var list=json.data;
+                    //alert(list.length);
+                    for (var i = 0; i < list.length; i++) {
+                        var html = '<div class="panel panel-default ">\n' +
+                            '            <div class="panel-body">\n' +
+                            '                <div class="diary">\n' +
+                            '                    <a class="icon">\n' +
+                            '                        <img src="..#{avatar}" width="60px" height="60px">\n' +
+                            '                    </a>\n' +
+                            '                    <div class="body">\n' +
+                            '                        <div class="heading overflow-hidden">\n' +
+                            '                            <a class="name left">#{username}</a>\n' +
+                            '                            <span class="complete_time right"> #{createdTime} </span>\n' +
+                            '                        </div>\n' +
+                            '                        <div class="center"><a class="title"><b><<#{title}>></b></a></div>\n' +
+                            '                        <p class="words">#{words}</p>\n' +
+                            '                        <div class="bottom right">\n' +
+                            '                            <a href="showDiary.html?did=#{did}">查看</a>\n' +
+                            '                        </div>\n' +
+                            '                    </div>\n' +
+                            '                </div>\n' +
+                            '            </div>\n' +
+                            '        </div>';
+
+                        html = html.replace(/#{avatar}/g, list[i].avatar);
+                        html = html.replace(/#{username}/g, list[i].username);
+                        var createdTime=list[i].createdTime;
+                        html = html.replace(/#{createdTime}/g,createdTime);
+                        html = html.replace(/#{title}/g, list[i].title);
+                        html = html.replace(/#{words}/g, list[i].words);
+                        html = html.replace(/#{did}/g, list[i].did);
+                        $("#diaries").append(html);
+                    }
+                } else {
+                    alert(json.message);
+
+                }
+            },
+            "error": function () {
+                alert("您的登录信息已过期，请重新登录！");
+                //location.href = "/love/web/login.html";
+            }
+        });
+    }
+</script>
+</html>

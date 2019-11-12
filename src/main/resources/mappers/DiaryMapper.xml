@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+	"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="cn.LoveUO.mapper.DiaryMapper">
+
+
+
+	<!-- 插入用户数据 -->
+	<!-- Integer addnew(Diary diary) -->
+	<insert id="addnew" useGeneratedKeys="true" keyProperty="did">
+		INSERT INTO diary (
+			did,uid,
+			username,avatar,
+			title,words,
+			completed_time,
+			created_user, created_time,
+			modified_user, modified_time
+		) VALUES (
+			#{did}, #{uid},
+			#{username},#{avatar},
+			#{title}, #{words},
+			#{completedTime},
+			#{createdUser}, #{createdTime},
+			#{modifiedUser}, #{modifiedTime}
+		)
+	</insert>
+
+	<!-- 根据完成时间查询日记数据 -->
+	<!-- Diary findByCompleteTime(Date completedTime); -->
+	<select id="findByCompleteTime" resultType="cn.LoveUO.entity.Diary">
+		SELECT
+			did, title,
+			username,avatar,
+			words, completed_time as completedTime
+		FROM
+			diary
+		WHERE
+			completed_time=#{completedTime}
+	</select>
+
+	<!--查询所有日记对象总数
+	Integer countDiaries();-->
+	<select id="countDiaries" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			diary
+	</select>
+
+	<!--查询所有日记对象
+	List<Diary> findAllDiary();-->
+	<select id="findAllDiary" resultType="cn.LoveUO.entity.Diary">
+		SELECT
+			did, uid,
+			username,avatar,
+			title, words,
+			created_user as createdUser,created_time as createdTime
+		FROM
+			diary
+		ORDER BY
+			created_time DESC
+	</select>
+
+
+
+	<!--查询所有日记对象
+	List<Diary> findPersonDiary();-->
+	<select id="findPersonDiary" resultType="cn.LoveUO.entity.Diary">
+		SELECT
+			did, uid,
+			username,avatar,
+			title, words,
+			created_user as createdUser,created_time as createdTime
+		FROM
+			diary
+		WHERE
+			uid=#{uid}
+		ORDER BY
+			created_time DESC
+	</select>
+	<!--更新日记表中的头像地址
+	Integer updateAvatar(Diary diary);-->
+	<update id="updateAvatar">
+		UPDATE
+			diary
+		SET
+			avatar=#{avatar},
+			modified_time=#{modifiedTime}
+		WHERE
+			uid=#{uid}
+	</update>
+
+	<!--根据did查询日记信息
+	Diary showDiaryByDid(Integer did);-->
+	<select id="showDiaryByDid" resultType="cn.LoveUO.entity.Diary">
+		SELECT
+			did, uid,
+			username,avatar,
+			title, words,
+		  	completed_time as completedTime,
+			created_user as createdUser,created_time as createdTime
+		FROM
+			diary
+		WHERE
+			did=#{did}
+	</select>
+</mapper>
+
+

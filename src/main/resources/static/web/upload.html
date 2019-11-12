@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>爱你哦</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	</head>
+
+	<body>
+		<!--头部-->
+		<div class="headerpage"></div>
+		<!--导航 -->
+		<!--分割导航和顶部-->
+		<div class="row top-nav">
+			<div class="col-md-6">
+				<ul class="nav nav-pills">
+					<li>
+						<a href="#"></a>
+					</li>
+					<li class="active"><a href="index.html"><span class="fa fa-home"></span></a></li>
+					<li><a href="index.html">表白主页</a></li>
+					<li><a href="#" class="bg-info">个人主页</a></li>
+					<li><a href="diary.html">日记主页</a></li>
+				</ul>
+			</div>
+			<div class="col-md-6">
+				<form action="search.html" class="form-inline pull-right" role="form">
+					<div class="form-group">
+						<input type="text" class="form-control" id="search" name="search" placeholder="请输入商品名称进行搜索">
+					</div>
+					<button type="submit" class="btn btn-default btn-sm"><span class="fa fa-search"></span></button>
+				</form>
+			</div>
+		</div>
+		<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<div class="col-md-2">
+				<!--左侧导航开始-->
+				<div class="panel-group" id="accordion">
+
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：资料修改-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">资料修改</a>
+							</p>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div><a href="userdata.html">基础资料</a></div>
+								<div><a href="personalDiary.html">个人日记</a></div>
+								<div><a href="upload.html"><b>上传头像</b></a></div>
+								<div><a href="password.html">修改密码</a></div>
+								<div><a href="pay.html">购买VIP</a></div>
+								<div><a href="exit.html">退出</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左侧导航结束-->
+			</div>
+			<div class="col-md-10	">
+				<div class="panel panel-default">
+					<ul class="nav nav-tabs">
+						<li><a href="userdata.html">基础资料</a></li>
+						<li><a href="personalDiary.html">个人日记</a></li>
+						<li class="active"><a href="#">上传头像</a></li>
+						<li><a href="password.html">修改密码</a></li>
+						<li><a href="pay.html">购买VIP</a></li>
+						<li><a href="exit.html">退出</a></li>
+					</ul>
+					<div class="panel-body">
+						<!--上传头像表单开始-->
+						<form class="form-horizontal" id="form-change-avatar" role="form">
+							<div class="form-group">
+								<label class="col-md-2 control-label">选择头像:</label>
+								<div class="col-md-1">
+									<img id="img-avatar" src="../images/index/user.jpg" width="188px" height="168px" alter="图片被外星人吃了"/>
+								</div>
+								<div class="clearfix"></div>
+								<div class="col-md-offset-2 col-md-4">
+									<input type="file" name="avatar" id="up">
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<input type="button" id="btn-change-avatar" class="btn btn-primary" value="上传" />
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--footer-->
+		<div class="footerpage"></div>
+		<!--footer over-->
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			/*公共部分
+             * 导航栏
+             * footer CopyRight
+             */
+			$(".headerpage").load("header2.html");
+			$(".footerpage").load("footer.html");
+		});
+		var username;
+		getSessionUserName();
+		$(document).ready(function() {
+			$("#btn-change-avatar").click(function() {
+				$.ajax({
+					"url":"/love/users/change_avatar",
+					"data":new FormData($("#form-change-avatar")[0]),
+					"contentType":false,
+					"processData":false,
+					"type":"post",
+					"dataType":"json",
+					"success":function(json) {
+						if (json.state == 200) {
+							alert("上传成功");
+							$("#img-avatar").attr("src", "/love/"+json.data);
+							location.href = "upload.html";
+						} else {
+							alert(json.message);
+						}
+					},
+					"error":function() {
+						if (username){
+							alert("未知错误，可能是文件不匹配！");
+							location.href = "/love/web/upload.html";
+						}else{
+							alert("您的登录信息已过期，请重新登录！");
+							location.href = "/love/web/login.html";
+						}
+					}
+				});
+		});
+			flushAvatar();
+		});
+
+		/**
+		 * 刷新头像
+		 */
+		function flushAvatar() {
+			$.ajax({
+				"url":"/love/users/get_avatar",
+				"type":"post",
+				"dataType":"json",
+				"success":function(json) {
+					if (json.state == 200) {
+						if (json.data.avatar!="") {
+							$("#img-avatar").attr("src", "/love/"+json.data.avatar);
+						}
+					} else {
+						alert(json.message);
+					}
+				},
+				"error":function() {
+					alert("您的登录信息已过期，请重新登录！");
+					location.href = "/love/web/login.html";
+				}
+			});
+		}
+
+		function getSessionUserName() {
+			$.ajax({
+				"url":"/love/users/get_avatar",
+				"type":"post",
+				"dataType":"json",
+				"success":function(json) {
+					if (json.state == 200) {
+						username=json.data.username;
+					} else {
+						alert(json.message);
+					}
+				},
+				"error":function() {
+					alert("您的登录信息已过期，请重新登录！");
+					location.href = "/love/web/login.html";
+				}
+			});
+		}
+	</script>
+</html>

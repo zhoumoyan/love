@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>爱你哦</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/index.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/reg.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+	</head>
+	<body>
+		<!-- 顶部导航 -->
+		<div class="headerpage"></div>
+		<!--顶部导航 over-->
+	<!--主体-->
+		<div class="container mycontent1 text-left">
+			<!--透明层 -->
+			<div class="regDiv">
+				<p>新用户注册</p>
+				<!--表单开始-->
+				<form  id="form-reg" class="form-horizontal" role="form">
+					<!--用户名-->
+					<div class="form-group">
+						<label  class="col-md-3 control-label">名字：</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+							<span class="text-danger" id="username-message"></span>
+						</div>
+					</div>
+					<!--密码-->
+					<div class="form-group">
+						<label class="col-md-3 control-label">密码：</label>
+						<div class="col-md-8">
+							<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+							<span class="text-danger" id="password-message"></span>
+						</div>
+					</div>
+					<!--确认密码-->
+					<div class="form-group">
+						<label class="col-md-3 control-label">确认密码：</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="confirm-password" name="confirm-password" placeholder="请确定密码">
+							<span class="text-danger" id="confirm-password-message"></span>
+						</div>
+					</div>
+					<!--邮箱-->
+					<div class="form-group">
+						<label class="col-md-3 control-label">邮箱：</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱,以防需要找回密码">
+							<span class="text-danger" id="email-message"></span>
+						</div>
+					</div>
+					<!--验证码-->
+					<div class="form-group">
+						<label class="col-md-3 control-label">验证码：</label>
+						<div class="col-md-8">
+							<input type="text" name="code" id="code" style="width: 80px;" />
+							<img id="imgObj" alt="验证码">
+							<a href="#" id="changCode">换一张</a>
+							<span class="text-danger1" id="code-message"></span>
+						</div>
+					</div>
+					<!--提交按钮-->
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-8">
+							<input  id="btn-reg" class="btn btn-primary" type="button" value="立即注册" />
+							<span class="pull-right"><small>已经有账号？</small><a href="login.html">点击登录</a></span>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--footer-->
+		<div class="footerpage"></div>
+		<!--footer over-->
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			/*公共部分
+             * 导航栏
+             * footer CopyRight
+             */
+			$(".headerpage").load("header1.html");
+			$(".footerpage").load("footer.html");
+		});
+
+		/*点击更换验证码*/
+		$("#changCode").click(
+            function changeImg() {
+                /*var imgSrc = $("#imgObj");
+                var src = imgSrc.attr("src");
+                imgSrc.attr("src", chgUrl(src));*/
+				$("#imgObj").attr("src",chgUrl($("#imgObj").attr("src")))
+            }
+        );
+		// 时间戳
+		// 为了使每次生成图片不一致，即不让浏览器读缓存，所以需要加上时间戳
+		function chgUrl(url) {
+			var timestamp = (new Date()).valueOf();
+			url = url.substring(0, 20);
+			if ((url.indexOf("&") >= 0)) {
+				url = url + "×tamp=" + timestamp;
+			} else {
+				url = url + "?timestamp=" + timestamp;
+			}
+			return url;
+		}
+
+		$(document).ready(function() {
+
+			/*生成验证码*/
+			$("#imgObj").attr("src","/love/users/getCode");
+
+			$("#btn-reg").click(function() {
+				/**
+				 * 验证用户名格式是否正确
+				 */
+
+				var username=$("#username").val();
+				if(!username.match(/^[\w]{6,12}$/)) {
+					$("#username-message").text("用户名格式不正确！6到12位任意字符");
+				}
+
+				var password=$("#password").val();
+				if(!password.match(/^[\w]{6,12}$/)) {
+					$("#password-message").text("密码格式不正确！6到12位任意字符");
+				}
+				var confirmPassword=$("#confirm-password").val();
+				if(confirmPassword!=password){
+					$("#confirm-password-message").text("确认密码必须与密码一致！");
+				}
+				var email = $("#email").val();
+				if (!email.match(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/)) {
+					$("#email-message").text("邮箱格式不正确！");
+				}
+				/*验证验证码是否正确*/
+				$.ajax({
+					"url":"/love/users/checkCode",
+					"data":"code="+$("#code").val(),
+					"type":"post",
+					"dataType":"json",
+					"success":function(json) {
+						if (json.state == 200) {
+						    /*提交注册*/
+                            if ($(".text-danger").text().length === 0) {
+                                $.ajax({
+                                    "url":"/love/users/reg",
+                                    "data":$("#form-reg").serialize(),
+                                    "type":"post",
+                                    "dataType":"json",
+                                    "success":function(json) {
+                                        if (json.state == 200) {
+                                            alert("注册成功,确认跳转登录页面！");
+                                            location.href = "login.html";
+                                        } else {
+                                            if (json.state==3000) {
+                                                $("#username-message").text("该用户名已经被注册过了！");
+												$("#imgObj").attr("src",chgUrl($("#imgObj").attr("src")));
+                                            }
+                                            if (json.state==4000) {
+                                                $("#email-message").text("该邮箱已经被注册过了！");
+												$("#imgObj").attr("src",chgUrl($("#imgObj").attr("src")));
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+						} else {
+							$("#code-message").text("验证码不正确!");
+							$("#imgObj").attr("src",chgUrl($("#imgObj").attr("src")));
+						}
+					},
+					"error":function() {
+						location.href = "/love/web/register.html";
+					}
+				});
+				$(".form-control").focus(function () {
+					$(".text-danger").text("");
+				});
+				$("#code").focus(function () {
+					$(".text-danger1").text("");
+				});
+
+			});
+		});
+	</script>
+</html>

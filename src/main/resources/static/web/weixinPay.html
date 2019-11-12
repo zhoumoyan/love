@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!--edge浏览器H5兼容设置-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--360浏览器H5兼容设置-->
+    <meta name="renderer" content="webkit"/>
+    <title>爱你哦</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--导入核心文件-->
+    <script src="../bootstrap3/js/holder.js"></script>
+    <link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    <script src="../bootstrap3/js/bootstrap.js"></script>
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/top.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/footer.css"/>
+</head>
+
+<body>
+<!--头部-->
+<div class="headerpage"></div>
+<!--导航 -->
+<!--分割导航和顶部-->
+<div class="row top-nav">
+    <div class="col-md-6">
+        <ul class="nav nav-pills">
+            <li>
+                <a href="#"></a>
+            </li>
+            <li class="active"><a href="index.html"><span class="fa fa-home"></span></a></li>
+            <li><a href="#">支付页面</a></li>
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <form action="search.html" class="form-inline pull-right" role="form">
+            <div class="form-group">
+                <input type="text" class="form-control" id="search" name="search" placeholder="请输入商品名称进行搜索">
+            </div>
+            <button type="submit" class="btn btn-default btn-sm"><span class="fa fa-search"></span></button>
+        </form>
+    </div>
+</div>
+<div class="container" align="center">
+    <div class="col-md-10	">
+        <div class="mod_layer_wxopen">
+            <div class="ly_content">
+                <div class="ly_bd cf">
+                    <div class="ly_ct">
+                        <div class="qr_list">
+                            <h3 class="qr_tit">正在给用户<span class="user js_wx_name">H</span><span class="js_txt">开通</span>VIP会员
+                            </h3>
+                            <div class="qr_pic">
+                                <img id="qr_img">
+                                <span class="icon_wx"></span>
+                            </div>
+                            <p class="qr_txt js_qr_txt">使用微信扫描二维码</p>
+                            <p class="qr_tips">请使用微信扫码支付</p>
+                            <button type="submit" id="changpay_button" class="btn btn-default btn-sm">支付</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--footer-->
+<div class="footerpage"></div>
+<!--footer over-->
+</body>
+<script type="text/javascript">
+    $(function () {
+        /*公共部分
+         * 导航栏
+         * footer CopyRight
+         */
+        $(".headerpage").load("header2.html");
+        $(".footerpage").load("footer.html");
+
+    });
+
+    $(document).ready(function () {
+        $.ajax({
+            "url": "/love/order/getQrCode",
+            "type": "post",
+            "dataType": "json",
+            "success": function (json) {
+                if (json.state == 200) {
+                    $("#qr_img").attr("src", json.data);
+                } else {
+                    alert(json.message);
+                }
+            },
+            "error": function () {
+                //alert("您的登录信息已过期，请重新登录！");
+                //location.href = "/love/web/login.html";
+            }
+        });
+    });
+
+    //每两秒检查一次
+    /*setInterval(function() {
+        $.ajax({
+            "url":"/love/order/checkOrder",
+            "type":"post",
+            "dataType":"json",
+            "success":function(json) {
+                if (json.state == 200) {
+                    alert("支付成功！");
+                } else {
+                    alert(json.message);
+                }
+            },
+            "error":function() {
+                //alert("您的登录信息已过期，请重新登录！");
+                //location.href = "/love/web/login.html";
+            }
+        });
+    },2000)*/
+    $("#changpay_button").click(function () {
+        $.ajax({
+            "url": "/love/users/change_pay_state",
+            "type": "post",
+            "dataType": "json",
+            "success": function (json) {
+                if (json.state == 200) {
+                    location.href = "/love/web/pay.html";
+                } else {
+                    alert(json.message);
+                }
+            },
+            "error": function () {
+                alert("您的登录信息已过期，请重新登录！");
+                location.href = "/love/web/login.html";
+            }
+        });
+    });
+</script>
+</html>

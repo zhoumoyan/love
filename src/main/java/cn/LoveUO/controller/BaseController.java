@@ -85,7 +85,7 @@ public abstract class BaseController {
 		} else if (e instanceof PasswordNotMatchException) {
 			// 6000-密码不匹配异常
 			rr.setState(6000);
-		} else if (e instanceof PasswordNotMatchException) {
+		} else if (e instanceof UsernameDuplicateException) {
 			// 7000-用户名重复异常
 			rr.setState(7000);
 		} else if (e instanceof UpdateException) {

@@ -20,7 +20,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 			// 执行拦截
 			return false;
 		}
-		
 		// 放行
 		return true;
 	}

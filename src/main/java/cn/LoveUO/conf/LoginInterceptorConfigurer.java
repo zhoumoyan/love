@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class LoginInterceptorConfigurer
 	implements WebMvcConfigurer {
-
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 拦截白名单

@@ -86,7 +86,7 @@ public class UserServiceImpl implements IUserService {
             PasswordNotMatchException {
         // 根据参数username查询用户数据
         User result = userMapper.findByUsername(username);
-        //System.out.println(result);
+        System.out.println(result);
         // 判断查询结果是否为null
         if (result == null) {
             // 抛出异常：UserNotFoundException
@@ -95,19 +95,21 @@ public class UserServiceImpl implements IUserService {
 
         // 从查询结果中获取盐值
         String salt = result.getSalt();
+        System.out.println(salt);
         // 将参数password和盐值进行加密
         String md5Password = getMd5Password(password, salt);
+        System.out.println(md5Password);
         // 判断加密后得到的密码与查询结果中的密码是否不匹配
         if (!result.getPassword().equals(md5Password)) {
             // 抛出异常：PasswordNotMatchException
             throw new PasswordNotMatchException(
                     "登录失败！密码错误！");
         }
-
         // 将查询结果中的password、salt、isDelete都设置为null
         result.setPassword(null);
         result.setSalt(null);
         // 返回查询结果
+        System.out.println("result2"+result);
         return result;
     }
 

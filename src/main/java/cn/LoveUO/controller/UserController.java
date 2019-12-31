@@ -52,12 +52,15 @@ public class UserController extends BaseController {
     @PostMapping("login")
     @ResponseBody
     public ResponseResult<User> login(String username, String password, HttpSession session) {
+        System.out.println(username);
+        System.out.println(password);
         // 执行登录，获取返回值
         User data = userService.login(username, password);
         session.setAttribute("uid", data.getUid());
         session.setAttribute("username", data.getUsername());
         session.setAttribute("avatar", data.getAvatar());
         // 响应成功
+        System.out.println(data);
         return new ResponseResult<>(SUCCESS, data);
     }
 
